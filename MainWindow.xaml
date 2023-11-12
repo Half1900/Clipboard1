@@ -1,0 +1,121 @@
+﻿<Window x:Class="Clipboards.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Clipboards"
+        xmlns:ex="clr-namespace:Clipboards.Styles"
+        mc:Ignorable="d"
+        Name="win"
+        Topmost="True"
+        ShowActivated="False"
+        AllowsTransparency="True"
+        WindowStyle="None"
+        Title="MainWindow" 
+        Height="445"         
+        MouseLeftButtonDown="MoveWindow"
+        Width="350">
+    <Window.Resources>
+        <ResourceDictionary >
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="./Styles/CloseButton.xaml"/>
+                <ResourceDictionary Source="./Styles/ListBox.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <WindowChrome x:Key="WindowChromeKey">
+                <WindowChrome.ResizeBorderThickness>
+                    <Thickness>0</Thickness>
+                </WindowChrome.ResizeBorderThickness>
+            </WindowChrome>
+        </ResourceDictionary>
+
+    </Window.Resources>
+    <Window.Background>
+        <SolidColorBrush Opacity="0.5" Color="Transparent"/>
+    </Window.Background>
+    <Border CornerRadius="5" 
+            BorderThickness="2"
+            BorderBrush="Gray">
+        <Border.Background>
+            <SolidColorBrush Color="#eeeef2" Opacity="1"/>
+        </Border.Background>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="0"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Button x:Name="closeBtn" 
+                    Style="{DynamicResource CloseButtonStyle}" 
+                    Width="20" 
+                    Height="20" 
+                    HorizontalAlignment="Left" 
+                    Opacity="1" 
+                    VerticalAlignment="Center" 
+                    Margin="324,0,0,0" 
+                    Cursor="Hand"
+                    Background="Transparent" 
+                    Click="closeBtn_Click"/>
+            <TextBlock Text="剪贴板" 
+                       Grid.Row="0" 
+                       Foreground="Gray" 
+                       VerticalAlignment="Center" 
+                       HorizontalAlignment="Left" 
+                       Margin="5" 
+                       FontSize="15" 
+                       Width="300" 
+                       AllowDrop="True" 
+                       MouseLeftButtonDown="MoveWindow"/>
+            <TextBlock Text="点击清空" 
+                       Foreground="Gray" 
+                       VerticalAlignment="Center" 
+                       HorizontalAlignment="Left" 
+                       Margin="103,0,0,0" 
+                       Width="48" 
+                       Cursor="Hand"
+                       x:Name="clear"
+                       MouseLeftButtonDown="ClearBoard" 
+                       AllowDrop="True"/>
+            <CheckBox
+                x:Name="topBtn"
+                Content="置顶" 
+                Margin="154,0,148,0"
+                Foreground="Gray"
+                Cursor="Hand"
+                Click="Top_Click" 
+                Height="16" 
+                IsChecked="True"
+                VerticalAlignment="Center"/>
+            <CheckBox
+                x:Name="statusBtn"
+                Content="状态栏" 
+                Margin="199,0,92,0"
+                Foreground="Gray"
+                Cursor="Hand"
+                Click="Status_Click" 
+                Height="16" 
+                IsChecked="True"
+                VerticalAlignment="Center"/>
+            <CheckBox
+                x:Name="saveImgBtn"
+                Content="保存图片" 
+                Margin="255,0,23,0"
+                Foreground="Gray"
+                Cursor="Hand"
+                Click="SaveImgBtn_Click" 
+                Height="14" 
+                VerticalAlignment="Center"/>
+            <ex:ListBoxEx Style="{StaticResource ListBoxStyle}" 
+                          Background="Transparent" 
+                          Grid.Row="2" 
+                          VerticalAlignment="Top"  
+                          BorderThickness="0" 
+                          ItemContainerStyle="{StaticResource UserInfoStyle}" 
+                          x:Name="UserInfoList"
+                          Margin="18 0"             
+                          MinWidth="{Binding ElementName=win, Path=Width}" 
+                          ItemsSource="{Binding ClipboardsItems, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          >
+            </ex:ListBoxEx>
+        </Grid>
+    </Border>
+</Window>
